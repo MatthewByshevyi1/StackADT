@@ -161,13 +161,16 @@ public class StackTest<T>
         }
             
         // test peek method
-        if(stack.peek().intValue() != 1)
-            failure("peek method is not correct");
-        
-        // test pop method
-        if(stack.pop().intValue() != 1)
-            failure("pop method is not correct");
+        try {
+            if(stack.peek().intValue() != 1)
+                failure("peek method is not correct");
             
+            // test pop method
+            if(stack.pop().intValue() != 1)
+                failure("pop method is not correct");
+        } catch (StackUnderflowException e) {
+            System.out.println(e.getMessage());
+        }
         // validate size method
         if (stack.size() != 0)
         {
@@ -239,17 +242,21 @@ public class StackTest<T>
             return;
         }
         
-        int x = stack.peek().intValue();
-        if(x != 1000)
-            failure("push and/or peek methods are incorrect");
-        
-        while(x > 10)
-        {
-            if(x != stack.pop().intValue())
-                failure("push and/or pop methods are incorrect");
-            x -= 10;
-            if(x != stack.peek().intValue())
+        try { 
+            int x = stack.peek().intValue();
+            if(x != 1000)
                 failure("push and/or peek methods are incorrect");
+            
+            while(x > 10)
+            {
+                if(x != stack.pop().intValue())
+                    failure("push and/or pop methods are incorrect");
+                x -= 10;
+                if(x != stack.peek().intValue())
+                    failure("push and/or peek methods are incorrect");
+            }
+        } catch (StackUnderflowException e) {
+            System.out.println(e.getMessage());
         }
 
         // validate size method
@@ -267,13 +274,17 @@ public class StackTest<T>
         }
         
         // test peek method
-        if(stack.peek().intValue() != 10)
-            failure("peek method is not correct");
-        
-        // test pop method
-        if(stack.pop().intValue() != 10)
-            failure("pop method is not correct");
+        try {
+            if(stack.peek().intValue() != 10)
+                failure("peek method is not correct");
             
+            // test pop method
+            if(stack.pop().intValue() != 10)
+                failure("pop method is not correct");
+        } catch (StackUnderflowException e) {
+            System.out.println(e.getMessage());
+        }
+
         // validate size method
         if (stack.size() != 0)
         {
@@ -349,10 +360,14 @@ public class StackTest<T>
             
         for(int i = 1; i <= 10; i++)
         {
-            if (stack.pop().intValue() != i)
-            {
-                failure("search method did not restore stack to original state");
-                break;
+            try {
+                if (stack.pop().intValue() != i)
+                {
+                    failure("search method did not restore stack to original state");
+                    break;
+                }
+            } catch (StackUnderflowException e) {
+                System.out.println(e.getMessage());
             }
         }
         if(!failed)

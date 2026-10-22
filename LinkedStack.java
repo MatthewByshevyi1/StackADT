@@ -8,16 +8,18 @@ public class LinkedStack<T> implements StackInterface<T> {
         size = 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public boolean empty() {
-        return top.getInfo() == null;
+        return size == 0;
     }
 
-    public T push(Object element) {
-        T value = (T) element;
+    @Override
+    public T push(T value) {
 
         if (empty()) {
             top.setInfo(value);
